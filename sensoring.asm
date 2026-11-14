@@ -2,8 +2,8 @@
 .eqv KEYBOARD_CONTROL, 0xFFFF0012
 .eqv KEYBOARD_DATA,    0xFFFF0014
 .eqv FIRST_KEY_ROW,    0x01
-.eqv KEY_1_CODE,       0x21
-.eqv KEY_2_CODE,       0x41
+.eqv KEY_1_CODE,       0x21 # Representa o Sensor de Veículo
+.eqv KEY_2_CODE,       0x41 # Representa o Botão de Pedestre
 
 .text
 .globl main
