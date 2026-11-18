@@ -31,6 +31,9 @@ BothRed:
 	li $t1, BOTH_RED
 	sb $t1, 0($t0)
 	
+	li $t3, 0 # Reseta o registrador contador de segundos
+	li $a2, 5 # "Pede" 5 segundos ao temporizador
+	
 	jr $ra
 
 PGreen_SRed:
