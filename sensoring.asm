@@ -6,24 +6,26 @@
 .eqv KEY_2_CODE,       0x41 # Representa o Botão de Pedestre
 
 .text
-.globl main
-
-main:
-	jal InitializeTrafficLights
-	move $s0, $zero                # Trava: evita repetir o sinal durante a mesma pressao.
+.globl MonitorSensors
 
 MonitorSensors:
-	jal ReadSensors
-	beqz $v0, SensorsReleased
-	bnez $s0, MonitorSensors
+	addiu $sp, $sp, -4
+	sw $ra, 0($sp)
 
-	li $s0, 1
-	jal BothRed
-	j MonitorSensors
+	monitor_loop:
+		jal ReadSensors
+		beqz $v0, sensors_released
+		bnez $s0, monitor_loop
 
-SensorsReleased:
-	move $s0, $zero
-	j MonitorSensors
+		li $s0, 1
+		
+		lw $ra, 0($sp)
+		addiu $sp, $sp, 4
+		jr $ra
+
+	sensors_released:
+		move $s0, $zero
+		j monitor_loop
 
 # Retorna $v0 = 1 quando a tecla 1 ou 2 for pressionada; caso contrario, 0.
 ReadSensors:
