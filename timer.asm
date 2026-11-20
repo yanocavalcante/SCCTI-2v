@@ -34,6 +34,10 @@ TimerCheck:
 		
 		# Incrementa em 1 o registrador que representa os segundos decorridos
 		addi $t3, $t3, 1
+
+		# Atualiza o display com os segundos decorridos
+		move $a0, $t3
+		jal display_atualizar_tempo
 		
 		# Se o tempo decorrido em segundos for igual ao tempo requisitado pelo estado dos semaforos (armazenado em $a2) a fun��o retorna
 		bge $t3, $a2, return
