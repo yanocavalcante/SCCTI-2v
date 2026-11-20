@@ -1,24 +1,28 @@
 # Timer Management File
-.globl TimerInit
 .globl TimerCheck
 
 .data
 	tempo_inicial: .word 0
 	
 .text
-TimerInit:
-	# Inicia o relógio
+
+TimerCheck:
+	addiu $sp, $sp, -8
+	sw $ra, 0($sp)
+	sw $s0, 4($sp)
+	
 	li $v0, 30
    	syscall
    	sw $a0, tempo_inicial
-   	jr $ra
-
-TimerCheck:
-	addiu $sp, $sp, -4
-	sw $ra, 0($sp)
+	li $s0, 0
 
 	loop_timer_check:
-		# Lê o tempo atual
+	
+		# Atualiza o display com os segundos decorridos
+		move $a0, $s0
+		jal display_atualizar_tempo
+	
+		# LÃª o tempo atual
 		li $v0, 30
 		syscall
 		
@@ -29,26 +33,23 @@ TimerCheck:
 		li $t2, 1000
 		bltu $t1, $t2, zero
 		
-		# Se passou 1 segundo desde a primeira medição
+		# Se passou 1 segundo desde a primeira mediÃ§Ã£o
 		sw $a0, tempo_inicial
 		
 		# Incrementa em 1 o registrador que representa os segundos decorridos
-		addi $t3, $t3, 1
-
-		# Atualiza o display com os segundos decorridos
-		move $a0, $t3
-		jal display_atualizar_tempo
+		addi $s0, $s0, 1
 		
-		# Se o tempo decorrido em segundos for igual ao tempo requisitado pelo estado dos semaforos (armazenado em $a2) a fun��o retorna
-		bge $t3, $a2, return
+		# Se o tempo decorrido em segundos for igual ao tempo requisitado pelo estado dos semaforos (armazenado em $a2) a funï¿½ï¿½o retorna
+		bge $s0, $a2, return
 		
 		j loop_timer_check
 		
 	zero:
-		# Ainda não se passou 1 segundo desde a primeira medição
+		# Ainda nÃ£o se passou 1 segundo desde a primeira mediÃ§Ã£o
 		j loop_timer_check
 		
 	return:
 		lw $ra, 0($sp)
-		addiu $sp, $sp, 4
+		lw $s0, 4($sp)
+		addiu $sp, $sp, 8
 		jr $ra
