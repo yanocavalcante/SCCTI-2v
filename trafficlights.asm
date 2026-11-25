@@ -3,7 +3,7 @@
 
 .eqv BOTH_RED, 0x7F
 .eqv PGREEN_SRED, 0x36
-.eqv PYEL_SRED, 0x7D
+.eqv PYEL_SRED, 0x7E
 .eqv PRED_SGREEN, 0x49
 .eqv PRED_SYEL, 0x79
 
@@ -25,6 +25,21 @@ InitializeTrafficLights:
 	sb $zero, 0($t0)
 	jr $ra
 
+PGreen_SRed:
+	li $t0, DISPLAY_LEFT
+	li $t1, PGREEN_SRED
+	sb $t1, 0($t0)
+	
+	jr $ra
+
+PYel_SRed:
+	li $t0, DISPLAY_LEFT
+	li $t1, PYEL_SRED
+	sb $t1, 0($t0)
+
+	li $a2, 2 # "Pede" 2 segundos ao temporizador
+	
+	jr $ra
 # Responde ao sinal de um sensor acendendo todos os segmentos da esquerda, ou seja, os dois semáforos ficam vermelhos.
 BothRed:
 	li $t0, DISPLAY_LEFT
@@ -35,19 +50,12 @@ BothRed:
 	
 	jr $ra
 
-PGreen_SRed:
+PRed_SGreen:
 	li $t0, DISPLAY_LEFT
-	li $t1, PGREEN_SRED
-	sb $t1, 0($t0)
-	
-	jr $ra
-
-PYel_SRed:
-	li $t0, DISPLAY_LEFT
-	li $t1, PGREEN_SRED
+	li $t1, PRED_SGREEN
 	sb $t1, 0($t0)
 
-	li $a2, 2 # "Pede" 2 segundos ao temporizador
+	li $a2, 5 # "Pede" 5 segundos ao temporizador
 	
 	jr $ra
 
@@ -60,11 +68,3 @@ PRed_SYel:
 	
 	jr $ra
 	
-PRed_SGreen:
-	li $t0, DISPLAY_LEFT
-	li $t1, PGREEN_SRED
-	sb $t1, 0($t0)
-
-	li $a2, 5 # "Pede" 5 segundos ao temporizador
-	
-	jr $ra
