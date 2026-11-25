@@ -26,7 +26,3 @@ stoplight_cycle:
 	jal TimerCheck	
 
 	j main
-
-exit:
-	li $v0, 10
-	syscall
