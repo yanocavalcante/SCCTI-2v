@@ -41,3 +41,9 @@ Os dois sensores têm o mesmo efeito no fluxo atual: iniciam o próximo ciclo de
 4. Monte o programa e abra **Tools > Digital Lab Sim**.
 5. Clique em **Reset** no Digital Lab Sim, depois em **Connect to MIPS**.
 6. Execute o programa e pressione `1` ou `2` no teclado da ferramenta para iniciar um ciclo.
+
+## Autores
+
+Lucas Soares Ramos e Yano H. de Melo R. Cavalcante.
+
+INE5411 - Organização de Computadores I, Prof. Marcelo Daniel Berejuck.
